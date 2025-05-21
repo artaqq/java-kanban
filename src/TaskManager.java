@@ -2,6 +2,7 @@ import tasks.Epic;
 import tasks.SubTask;
 import tasks.Task;
 import tasks.TaskStatus;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,10 +12,6 @@ public class TaskManager {
     private HashMap<Long, Epic> epics = new HashMap<>();
     private HashMap<Long, SubTask> subtasks = new HashMap<>();
     private long generatorId = 1;
-
-    private long getNextId() {
-        return generatorId++;
-    }
 
     //2. Методы для каждого из типов задач
     //a. Получение списка всех задач
@@ -30,6 +27,10 @@ public class TaskManager {
         return new ArrayList<>(epics.values());
     }
 
+    public ArrayList<SubTask> getEpicSubTasks(Epic epic) {
+        return epic.getSubtasks();
+    }
+
     //b. Удаление всех задач
     public void deleteAllTasks() {
         tasks.clear();
@@ -41,7 +42,12 @@ public class TaskManager {
     }
 
     public void deleteAllSubTasks() {
-        subtasks.clear();
+        for (SubTask subTask : new ArrayList<>(subtasks.values())) {
+            Epic epic = epics.get(subTask.getEpicId());
+            subtasks.remove(subTask.getId());
+            epic.removeSubTask(subTask);
+            updateEpicStatus(epic);
+        }
     }
 
     //c. Получение задач по идентификатору
@@ -140,5 +146,9 @@ public class TaskManager {
         } else {
             epic.setStatus(TaskStatus.IN_PROGRESS);
         }
+    }
+
+    private long getNextId() {
+        return generatorId++;
     }
 }

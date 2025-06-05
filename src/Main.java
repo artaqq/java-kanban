@@ -26,18 +26,6 @@ public class Main {
         SubTask clothes = new SubTask("Одежда", "Купить одежду для тренировок", TaskStatus.IN_PROGRESS, traning.getId());
         tm.createSubTask(clothes);
         System.out.println("Создали таски");
-        tm.getSubTaskById(packing.getId());
-        tm.getEpicById(moving.getId());
-        tm.getEpicById(traning.getId());
-        tm.getTaskById(walking.getId());
-        tm.getTaskById(shopping.getId());
-        tm.getSubTaskById(packing.getId());
-        tm.getSubTaskById(unpacking.getId());
-        tm.getSubTaskById(unpacking.getId());
-        tm.getSubTaskById(packing.getId());
-        tm.getSubTaskById(packing.getId());
-        tm.getSubTaskById(packing.getId());
-        System.out.println(tm.getHistory());
         printAllTasks(tm);
         unpacking.setStatus(TaskStatus.IN_PROGRESS);
         tm.updateSubTask(unpacking);

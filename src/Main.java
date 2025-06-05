@@ -1,3 +1,6 @@
+import managers.HistoryManager;
+import managers.Managers;
+import managers.TaskManager;
 import tasks.Epic;
 import tasks.SubTask;
 import tasks.Task;
@@ -6,7 +9,8 @@ import tasks.TaskStatus;
 public class Main {
 
     public static void main(String[] args) {
-        TaskManager tm = new TaskManager();
+        TaskManager tm = Managers.getDefault();
+        HistoryManager hm = Managers.getDefaultHistory();
         Task walking = new Task("Сходить на прогулку", "Дойти до парка Авиаторов и сделать круг", TaskStatus.NEW);
         Task shopping = new Task("Сходить в магазин", "Дойти до магазина и купить баскетбольный мяч", TaskStatus.IN_PROGRESS);
         tm.createTask(walking);
@@ -22,6 +26,18 @@ public class Main {
         SubTask clothes = new SubTask("Одежда", "Купить одежду для тренировок", TaskStatus.IN_PROGRESS, traning.getId());
         tm.createSubTask(clothes);
         System.out.println("Создали таски");
+        tm.getSubTaskById(packing.getId());
+        tm.getEpicById(moving.getId());
+        tm.getEpicById(traning.getId());
+        tm.getTaskById(walking.getId());
+        tm.getTaskById(shopping.getId());
+        tm.getSubTaskById(packing.getId());
+        tm.getSubTaskById(unpacking.getId());
+        tm.getSubTaskById(unpacking.getId());
+        tm.getSubTaskById(packing.getId());
+        tm.getSubTaskById(packing.getId());
+        tm.getSubTaskById(packing.getId());
+        System.out.println(tm.getHistory());
         printAllTasks(tm);
         unpacking.setStatus(TaskStatus.IN_PROGRESS);
         tm.updateSubTask(unpacking);

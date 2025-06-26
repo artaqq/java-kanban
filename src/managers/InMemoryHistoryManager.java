@@ -9,18 +9,17 @@ import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private final Map<Long, Node> nodes;
-    private final List<Task> historyOfViewedTasks;
     private Node head;
     private Node tail;
 
     public InMemoryHistoryManager() {
         nodes = new HashMap<>();
-        historyOfViewedTasks = new ArrayList<>();
     }
 
     @Override
     public List<Task> getHistory() {
         Node temp = head;
+        List<Task> historyOfViewedTasks = new ArrayList<>();
         while (temp != null) {
             historyOfViewedTasks.add(temp.data);
             temp = temp.next;

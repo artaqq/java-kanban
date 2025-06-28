@@ -1,5 +1,6 @@
 package managers;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tasks.Epic;
@@ -118,11 +119,9 @@ public class InMemoryTaskManagerTest {
         Task task = tm.createTask(new Task("Title", "Description", TaskStatus.IN_PROGRESS));
         int count = tm.getTasks().size();
         tm.deleteTask(task.getId());
-        int count1 = tm.getTasks().size();
-
 
         assertEquals(1, count, "Задача не была добавлена в список задач.");
-        assertEquals(0, count1, "Задача не была удалена из списка задач.");
+        assertNull(tm.getTaskById(task.getId()), "Задача не была удалена из списка задач.");
     }
 
     @Test
@@ -131,10 +130,9 @@ public class InMemoryTaskManagerTest {
         SubTask subTask = tm.createSubTask(new SubTask("SubTitle", "SubDescription", TaskStatus.IN_PROGRESS, epic.getId()));
         int count = tm.getSubtasks().size();
         tm.deleteSubTask(subTask.getId());
-        int count1 = tm.getSubtasks().size();
 
         assertEquals(1, count, "Подзадача не была добавлена в список подзадач");
-        assertEquals(0, count1, "Подзадача не была удалена из списка подзадач.");
+        assertNull(tm.getSubTaskById(subTask.getId()), "Подзадача не была удалена из списка подзадач.");
     }
 
     @Test
@@ -144,13 +142,11 @@ public class InMemoryTaskManagerTest {
         int epicCount = tm.getEpics().size();
         int subTaskCount = tm.getSubtasks().size();
         tm.deleteEpic(epic.getId());
-        int epicCount1 = tm.getEpics().size();
-        int subTaskCount1 = tm.getSubtasks().size();
 
         assertEquals(1, epicCount, "Эпик не был добавлен в список эпиков.");
         assertEquals(1, subTaskCount, "Подзадача не была добавлена в список подзадач.");
-        assertEquals(0, epicCount1, "Эпик не был удален из списка эпиков.");
-        assertEquals(0, subTaskCount1, "При удалении эпика должны быть удалены все его подзадачи.");
+        assertNull(tm.getEpicById(epic.getId()), "Эпик не был удален из списка эпиков.");
+        assertNull(tm.getSubTaskById(subTask.getId()), "При удалении эпика должны быть удалены все его подзадачи.");
     }
 
     @Test

@@ -3,28 +3,84 @@ package managers;
 import tasks.Task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
-
-    private final List<Task> historyOfViewedTasks;
+    private final Map<Long, Node> nodes;
+    private Node head;
+    private Node tail;
 
     public InMemoryHistoryManager() {
-        historyOfViewedTasks = new ArrayList<>();
+        nodes = new HashMap<>();
     }
 
     @Override
     public List<Task> getHistory() {
+        Node temp = head;
+        List<Task> historyOfViewedTasks = new ArrayList<>();
+        while (temp != null) {
+            historyOfViewedTasks.add(temp.data);
+            temp = temp.next;
+        }
         return historyOfViewedTasks;
     }
 
     @Override
     public void add(Task task) {
-        if (historyOfViewedTasks.size() < 10) {
-            historyOfViewedTasks.add(task);
+        if (nodes.containsKey(task.getId())) {
+            removeNode(nodes.get(task.getId()));
+        }
+        linkLast(task);
+        nodes.put(task.getId(), tail);
+    }
+
+    @Override
+    public void remove(Long id) {
+        Node node = nodes.remove(id);
+        if (node != null) {
+            removeNode(node);
+        }
+    }
+
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    private void linkLast(Task task) {
+        Node node = new Node(task, tail, null);
+        if (isEmpty()) {
+            head = node;
         } else {
-            historyOfViewedTasks.removeFirst();
-            historyOfViewedTasks.add(task);
+            tail.next = node;
+            node.prev = tail;
+        }
+        tail = node;
+    }
+
+    private void removeNode(Node node) {
+        if (node.prev != null) {
+            node.prev.next = node.next;
+        } else {
+            head = node.next;
+        }
+        if (node.next != null) {
+            node.next.prev = node.prev;
+        } else {
+            tail = node.prev;
+        }
+    }
+
+    private class Node {
+        public Task data;
+        public Node prev;
+        public Node next;
+
+        public Node(Task data, Node prev, Node next) {
+            this.data = data;
+            this.prev = prev;
+            this.next = next;
         }
     }
 }

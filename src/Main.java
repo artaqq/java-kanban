@@ -62,7 +62,10 @@ public class Main {
         packing.setStatus(TaskStatus.DONE);
         tm.updateSubTask(packing);
         tm.deleteSubTask(unpacking.getId());
-        tm.deleteEpic(traning.getId());
+        //tm.deleteEpic(traning.getId());
+        //tm.deleteAllTasks();
+        //tm.deleteAllEpics();
+        //tm.deleteAllSubTasks();
         printAllTasks(tm);
     }
 

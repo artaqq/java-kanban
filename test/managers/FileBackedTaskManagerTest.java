@@ -42,7 +42,9 @@ public class FileBackedTaskManagerTest {
 
     @Test
     public void saveAndLoadEmptyFileTest() {
-        tm.save();
+        tm.deleteAllTasks();
+        tm.deleteAllSubTasks();
+        tm.deleteAllEpics();
 
         FileBackedTaskManager loadedFromFile = FileBackedTaskManager.loadFromFile(tempFile.toFile());
 

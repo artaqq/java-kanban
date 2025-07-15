@@ -19,41 +19,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         this.file = file;
     }
 
-    public void save() {
-        try {
-            if (Files.exists(file.toPath())) {
-                Files.delete(file.toPath());
-            }
-            Files.createFile(file.toPath());
-        } catch (IOException e) {
-            throw new ManagerSaveException("Не удалось найти файл для записи данных.");
-        }
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8))) {
-            //Пишем в файл
-            writer.write(CSVFormatter.getHeader());
-            writer.newLine();
-            for (Epic epic : getEpics()) {
-                writer.write(CSVFormatter.toString(epic));
-                writer.newLine();
-            }
-
-            for (SubTask subtask : getSubtasks()) {
-                writer.write(CSVFormatter.toString(subtask));
-                writer.newLine();
-            }
-
-            for (Task task : getTasks()) {
-                writer.write(CSVFormatter.toString(task));
-                writer.newLine();
-            }
-
-        } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка при записи данных в файл");
-        }
-    }
-
-    static FileBackedTaskManager loadFromFile(File file) {
+    public static FileBackedTaskManager loadFromFile(File file) {
         FileBackedTaskManager tm = new FileBackedTaskManager(file);
         try {
 
@@ -166,5 +132,39 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     public void deleteAllSubTasks() {
         super.deleteAllSubTasks();
         save();
+    }
+
+    private void save() {
+        try {
+            if (Files.exists(file.toPath())) {
+                Files.delete(file.toPath());
+            }
+            Files.createFile(file.toPath());
+        } catch (IOException e) {
+            throw new ManagerSaveException("Не удалось найти файл для записи данных.");
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8))) {
+            //Пишем в файл
+            writer.write(CSVFormatter.getHeader());
+            writer.newLine();
+            for (Epic epic : getEpics()) {
+                writer.write(CSVFormatter.toString(epic));
+                writer.newLine();
+            }
+
+            for (SubTask subtask : getSubtasks()) {
+                writer.write(CSVFormatter.toString(subtask));
+                writer.newLine();
+            }
+
+            for (Task task : getTasks()) {
+                writer.write(CSVFormatter.toString(task));
+                writer.newLine();
+            }
+
+        } catch (IOException e) {
+            throw new ManagerSaveException("Ошибка при записи данных в файл");
+        }
     }
 }

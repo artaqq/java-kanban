@@ -11,11 +11,11 @@ import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
     //1. Хранение задач всех типов
-    private HashMap<Long, Task> tasks = new HashMap<>();
-    private HashMap<Long, Epic> epics = new HashMap<>();
-    private HashMap<Long, SubTask> subtasks = new HashMap<>();
-    private long generatorId = 1;
-    private HistoryManager historyManager = Managers.getDefaultHistory();
+    protected HashMap<Long, Task> tasks = new HashMap<>();
+    protected HashMap<Long, Epic> epics = new HashMap<>();
+    protected HashMap<Long, SubTask> subtasks = new HashMap<>();
+    protected long generatorId = 1;
+    protected HistoryManager historyManager = Managers.getDefaultHistory();
 
     //2. Методы для каждого из типов задач
     //a. Получение списка всех задач

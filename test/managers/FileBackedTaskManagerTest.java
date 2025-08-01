@@ -12,6 +12,8 @@ import tasks.TaskStatus;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -55,12 +57,12 @@ public class FileBackedTaskManagerTest {
 
     @Test
     public void saveAndLoadFileWithTasksTest() {
-        Task task = new Task("Shopping", "Shopping in shopping centre", TaskStatus.NEW);
+        Task task = new Task("Shopping", "Shopping in shopping centre", TaskStatus.NEW, LocalDateTime.now(), Duration.ofMinutes(60));
         Epic epic = new Epic("Epic", "EpicDescription");
         tm.createTask(task);
         tm.createEpic(epic);
 
-        SubTask subTask = new SubTask("SubTask", "SubTusk Description", TaskStatus.NEW, epic.getId());
+        SubTask subTask = new SubTask("SubTask", "SubTusk Description", TaskStatus.NEW, LocalDateTime.now().plusDays(3) , Duration.ofMinutes(60), epic.getId());
         tm.createSubTask(subTask);
 
         FileBackedTaskManager loaded = FileBackedTaskManager.loadFromFile(tempFile.toFile());

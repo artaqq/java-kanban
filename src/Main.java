@@ -30,6 +30,7 @@ public class Main {
         SubTask clothes = new SubTask("Одежда", "Купить одежду для тренировок", TaskStatus.IN_PROGRESS, LocalDateTime.of(2025, 10, 30, 16, 48), Duration.ofMinutes(60), traning.getId());
         tm.createSubTask(clothes);
         System.out.println("Создали таски");
+        System.out.println(tm.getPrioritizedTasks());
 //        System.out.println("-".repeat(40));
 //        tm.getTaskById(walking.getId());
 //        tm.getEpicById(traning.getId());
@@ -53,27 +54,27 @@ public class Main {
 //        System.out.println("-".repeat(40));
 //        System.out.println(tm.getHistory());
 //        System.out.println("-".repeat(40));
-        printAllTasks(tm);
-        unpacking.setStatus(TaskStatus.IN_PROGRESS);
-        tm.updateSubTask(unpacking);
-        clothes.setStatus(TaskStatus.DONE);
-        tm.updateSubTask(clothes);
-        walking.setStatus(TaskStatus.DONE);
-        System.out.println("Изменили статусы");
-        printAllTasks(tm);
-        System.out.println("Удаляем задачи");
-        packing.setTitle("Упаковка");
-        packing.setStatus(TaskStatus.DONE);
-        tm.updateSubTask(packing);
-        tm.deleteSubTask(unpacking.getId());
-        System.out.println("-".repeat(40));
-        System.out.println(tm.getPrioritizedTasks());
-        System.out.println("-".repeat(40));
-        //tm.deleteEpic(traning.getId());
-        //tm.deleteAllTasks();
-        //tm.deleteAllEpics();
-        //tm.deleteAllSubTasks();
-        printAllTasks(tm);
+//        printAllTasks(tm);
+//        unpacking.setStatus(TaskStatus.IN_PROGRESS);
+//        tm.updateSubTask(unpacking);
+//        clothes.setStatus(TaskStatus.DONE);
+//        tm.updateSubTask(clothes);
+//        walking.setStatus(TaskStatus.DONE);
+//        System.out.println("Изменили статусы");
+//        printAllTasks(tm);
+//        System.out.println("Удаляем задачи");
+//        packing.setTitle("Упаковка");
+//        packing.setStatus(TaskStatus.DONE);
+//        tm.updateSubTask(packing);
+//        tm.deleteSubTask(unpacking.getId());
+//        System.out.println("-".repeat(40));
+//        System.out.println(tm.getPrioritizedTasks());
+//        System.out.println("-".repeat(40));
+//        //tm.deleteEpic(traning.getId());
+//        //tm.deleteAllTasks();
+//        //tm.deleteAllEpics();
+//        //tm.deleteAllSubTasks();
+//        printAllTasks(tm);
     }
 
     public static void printAllTasks(TaskManager taskManager) {

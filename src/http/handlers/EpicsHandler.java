@@ -21,7 +21,7 @@ public class EpicsHandler extends BaseHttpHandler {
             String[] pathParts = path.split("/");
 
             switch (method) {
-                case "GET": {
+                case GET: {
                     if (pathParts.length == 2) {
                         String response = gson.toJson(tm.getEpics());
                         sendSuccess(exchange, response);
@@ -46,7 +46,7 @@ public class EpicsHandler extends BaseHttpHandler {
                     }
                     break;
                 }
-                case "POST": {
+                case POST: {
                     String requestBody = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
                     Epic epic = gson.fromJson(requestBody, Epic.class);
                     System.out.println(epic);
@@ -59,7 +59,7 @@ public class EpicsHandler extends BaseHttpHandler {
                     }
                     break;
                 }
-                case "DELETE": {
+                case DELETE: {
                     Long id = Long.parseLong(pathParts[2]);
                     if (tm.getEpicById(id) != null) {
                         tm.deleteEpic(id);
@@ -73,8 +73,7 @@ public class EpicsHandler extends BaseHttpHandler {
                     sendNotFound(exchange);
             }
         } catch (Exception e) {
-            sendText(exchange, e.getMessage(), 500);
-            //sendInternalError(exchange);
+            sendInternalError(exchange);
         }
     }
 }

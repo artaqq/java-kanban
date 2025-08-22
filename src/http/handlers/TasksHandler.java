@@ -23,7 +23,7 @@ public class TasksHandler extends BaseHttpHandler {
             String[] pathParts = path.split("/");
 
             switch (method) {
-                case "GET":
+                case GET:
                     if (pathParts.length == 2) {
                         String response = gson.toJson(tm.getTasks());
                         System.out.println(response);
@@ -41,7 +41,7 @@ public class TasksHandler extends BaseHttpHandler {
                         sendNotFound(exchange);
                     }
                     break;
-                case "POST": {
+                case POST: {
                     String requestBody = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
                     Task task = gson.fromJson(requestBody, Task.class);
                     try {
@@ -61,7 +61,7 @@ public class TasksHandler extends BaseHttpHandler {
                     }
                     break;
                 }
-                case "DELETE": {
+                case DELETE: {
                     long id = Long.parseLong(pathParts[2]);
                     if (pathParts.length == 3) {
                         if (tm.getTaskById(id) != null) {

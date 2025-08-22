@@ -23,7 +23,7 @@ public class SubTasksHandler extends BaseHttpHandler {
             String[] pathParts = path.split("/");
 
             switch (method) {
-                case "GET": {
+                case GET: {
                     if (pathParts.length == 2) {
                         String response = gson.toJson(tm.getSubtasks());
                         sendSuccess(exchange, response);
@@ -40,7 +40,7 @@ public class SubTasksHandler extends BaseHttpHandler {
                     }
                     break;
                 }
-                case "POST": {
+                case POST: {
                     String requestBody = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
                     SubTask subTask = gson.fromJson(requestBody, SubTask.class);
                     try {
@@ -60,7 +60,7 @@ public class SubTasksHandler extends BaseHttpHandler {
                     }
                     break;
                 }
-                case "DELETE": {
+                case DELETE: {
                     if (pathParts.length == 3) {
                         long id = Long.parseLong(pathParts[2]);
                         if (tm.getSubTaskById(id) != null) {

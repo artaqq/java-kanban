@@ -19,6 +19,9 @@ public abstract class BaseHttpHandler implements HttpHandler {
 
     protected Gson gson;
     protected TaskManager tm;
+    protected static final String GET = "GET";
+    protected static final String POST = "POST";
+    protected static final String DELETE = "DELETE";
 
     public BaseHttpHandler(TaskManager tm) {
         this.tm = tm;
